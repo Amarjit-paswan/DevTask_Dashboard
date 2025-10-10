@@ -1,0 +1,16 @@
+.profile_img{
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card_box{
+    width: 300px;
+    height: 250px;
+    border-radius: 15px;
+}
+
+.card_box .icon{
+    background-color: rgba(4, 52, 100, 0.899);
+}

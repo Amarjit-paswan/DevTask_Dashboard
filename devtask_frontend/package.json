@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "font-awesome": "^4.7.0",
+    "fortawesome": "^0.0.1-security",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
