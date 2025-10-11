@@ -5,7 +5,7 @@ import Card from './card';
 function ProfileInfo() {
   return (
     <>
-        <div className="container mt-5">
+        <div className="container-fluid mt-5">
             <div className="profile_container d-flex justify-content-around ">
                 <div className="profile_img  ">
                     <img src="https://images.pexels.com/photos/1680175/pexels-photo-1680175.jpeg" alt="" srcset="" className='w-100 h-100' />

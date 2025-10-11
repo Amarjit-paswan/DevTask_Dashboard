@@ -1,0 +1,38 @@
+.tracker_table thead{
+       background:linear-gradient(to bottom,#0c0f70b7,#07094b7d);
+       border-bottom: 1px solid rgba(255, 255, 255, 0.345);
+}
+
+.tracker_table{
+       /* background:linear-gradient(to bottom,#0c0f7038,#07094b1b); */
+    border: 1px solid #07094b7d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tracker_table thead tr th{
+    padding: 1rem;
+}
+.tracker_table tbody tr td{
+    padding: 1rem;
+    border-bottom: 1px solid #0c0f707b;
+}
+
+.status_box{
+    background-color:rgba(4, 78, 4, 0.603) ;
+    padding: 0.5rem 1rem;
+    /* color: white; */
+    border-radius: 10px;
+    font-weight: bold;
+
+}
+
+.completed_msg{
+    background-color:rgba(13, 206, 13, 0.553) ;
+    color: lightgreen;
+}
+
+.pending_msg{
+    background-color: rgba(255, 166, 0, 0.447);
+    color: orange;
+}
