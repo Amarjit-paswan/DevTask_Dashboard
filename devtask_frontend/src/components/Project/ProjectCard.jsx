@@ -1,10 +1,13 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 function ProjectCard() {
   return (
     <div className='p-4 project_card'>
+
         <div className="project_title">
             <h3>Project Title</h3>
+
         </div>
 
         <div className="project_info">
@@ -17,9 +20,11 @@ function ProjectCard() {
             <div className="language">React</div>
         </div>   
 
-        <div className="d-grid mt-3">
-            <button className='view_btn'>View all details</button>
-        </div>  
+            <NavLink to="/projects/:id">
+                <div className="d-grid mt-3">
+                    <button className='view_btn'>View all details</button>
+                </div>  
+            </NavLink>
     </div>
   )
 }

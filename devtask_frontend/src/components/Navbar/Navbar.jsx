@@ -17,11 +17,7 @@ function Navbar() {
                             Home
                         </NavLink>
                     </li>
-                    <li className='m-0 p-2 px-4 '>
-                        <NavLink to='/profile' className={({isActive}) => `${isActive ? 'text-warning': 'text-white'}`}>
-                            Profile
-                        </NavLink>
-                    </li>
+                  
                     <li className='m-0 p-2 px-4 '>
                         <NavLink to='/projects' className={({isActive}) => `${isActive ? 'text-warning': 'text-white'}`}>
                             Projects

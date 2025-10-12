@@ -11,11 +11,7 @@ function Sidebar() {
                        <i className="fa-solid  fa-house "></i> Home
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to='/profile' className={({isActive}) => `${isActive ? 'active': 'unactive'}`}>
-                      <i class="fa-solid fa-user"></i>  Profile
-                    </NavLink>
-                </li>
+               
                 <li>
                     <NavLink to='/projects' className={({isActive}) => `${isActive ? 'active': 'unactive'}`}>
                       <i class="fa-solid fa-folder"></i>  Projects
@@ -27,7 +23,7 @@ function Sidebar() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/' className={({isActive}) => `${isActive ? 'active': 'unactive'}`}>
+                    <NavLink to='/contact' className={({isActive}) => `${isActive ? 'active': 'unactive'}`}>
                        <i class="fa-solid fa-address-card"></i> Contact
                     </NavLink>
                 </li>
