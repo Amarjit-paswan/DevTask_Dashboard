@@ -1,6 +1,7 @@
 import React from 'react'
 import './home.css';
 import Card from './card';
+import {Link} from 'react-router-dom';
 
 function ProfileInfo() {
   return (
@@ -15,8 +16,13 @@ function ProfileInfo() {
                     <h1 className='text-warning'>Hey, I'm Amarjit</h1>
                     <p className="m-1 fs-3">Full Stack Developer passionate about building interactive web-apps.</p>
                     <div className="btn_groups d-flex gap-3 mt-4">
-                        <button className="btn btn-light btn-lg p-3 px-5">View My Projects</button>
-                        <button className="btn btn-none btn-lg p-3 px-5 border border-white text-white">Contact Me</button>
+                        <Link to='/projects'>
+                            <button className="btn btn-light btn-lg p-3 px-5">View My Projects</button>
+                        </Link>
+
+                        <Link to='/contact'>
+                            <button className="btn btn-none btn-lg p-3 px-5 border border-white text-white">Contact Me</button>
+                        </Link>
                     </div>
                 </div>
             </div>
