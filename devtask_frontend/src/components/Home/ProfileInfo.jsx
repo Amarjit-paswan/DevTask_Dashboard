@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './home.css';
 import Card from './card';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+
 
 function ProfileInfo() {
+
+    const [username, setUsername] = useState('');
+    const [bio, setBio] = useState('');
+
+    useEffect(()=>{
+        const fetchData = async function(){
+            try{
+                const res = await axios.get('http::/localhost:8000/api/useDetails');
+                setUsername(res.data.name);
+                setBio(res.data.bio);
+                        
+            }catch(error){
+                console.error(error);
+                
+            }
+        }
+
+        fetchData();
+    },[]);
   return (
     <>
         <div className="container-fluid mt-5">
