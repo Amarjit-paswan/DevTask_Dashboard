@@ -9,4 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/store', [ProfileController::class, 'add_user']);
-Route::get('/', [ProfileController::class,'fetch_user']);
+Route::get('/userDetails', [ProfileController::class,'fetch_user']);

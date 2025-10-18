@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css'
 import App from './App.jsx'
 
-import ProfileInfo from './components/Home/ProfileInfo.jsx'
+import ProfileInfo, { profileLoader } from './components/Home/ProfileInfo.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Project from './components/Project/Project.jsx'
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      {path: '/', element:<ProfileInfo />},
+      {path: '/', element:<ProfileInfo />, loader: profileLoader},
       {path: '/projects', element:<Project />},
       {path: '/projects/:id', element:<ProjectDetail />},
       {path: '/tracker', element:<Tracker />},
