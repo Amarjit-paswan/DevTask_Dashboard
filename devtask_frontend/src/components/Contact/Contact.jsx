@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './contact.css';
+import { useLoaderData } from 'react-router-dom';
+import axios from 'axios';
 
 function Contact() {
+
+    const data = useLoaderData();
+    const [profileImg, setProfileImg] = useState('');
+    console.log(data);
+
+    useEffect(()=>{
+        async function fetchUser(){
+
+            const res = await axios.get(data.github_url);
+            setProfileImg(res.data.avatar_url);
+        }
+
+        fetchUser();
+        
+    },[data.github_url]);
+    
   return (
     <div className='w-100 p-4'>
         <div className="title">
@@ -12,7 +30,7 @@ function Contact() {
             {/* Profile details info  */}
             <div className="myInfo_box d-flex gap-4 flex-column justify-content-center align-items-start ">
                 <div className="profile_img b">
-                    <img src="https://images.pexels.com/photos/1680175/pexels-photo-1680175.jpeg" alt="" srcset="" className='w-100 h-100' />
+                    <img src={profileImg} alt=""  className='w-100 h-100' />
                 </div>
                 <div className="myDetails  p-4 pt-1 rounded d-flex flex-column justify-content-center align-items-center">
                     <div className="mb-3 d-flex gap-2 justify-content-start align-items-center">
@@ -25,7 +43,7 @@ function Contact() {
                         <label htmlFor="" className="form-label  fs-4 text-warning">
                           <i class="fa-solid fa-phone"></i>  Phone:
                         </label>
-                        <p className='fs-5 text-end m-0'>+91-55454155</p>
+                        <p className='fs-5 text-end m-0'>{data.name}</p>
                     </div>
                 </div>
             </div>
