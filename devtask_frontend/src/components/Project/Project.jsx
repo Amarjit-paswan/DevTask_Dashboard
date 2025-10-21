@@ -2,14 +2,20 @@ import React from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import ProjectCard from './ProjectCard'
 import './project.css'
+import ProjectAdd from './ProjectAdd'
 
 function Project() {
-  return (
-            <div className="projectList_container w-100  p-4">
+  return (  
+    
+    
+    <div className="projectList_container w-100  p-4">
+                {/* Model for project add  */}
+                <ProjectAdd />
+
                 {/* title  */}
                 <div className="tittle d-flex justify-content-between align-items-center">
                   <h1 className='text-warning'>Projects</h1>
-                  <button className='btn btn-warning fw-bold'>+ Add Project</button>
+                  <button type='button' className='btn btn-warning fw-bold' data-bs-toggle="modal" data-bs-target="#ProjectAddModal">+ Add Project</button>
 
                 </div>
 
