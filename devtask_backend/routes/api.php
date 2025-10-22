@@ -14,5 +14,8 @@ Route::get('/store', [ProfileController::class, 'add_user']);
 Route::get('/userDetails', [ProfileController::class,'fetch_user']);
 
 //Add Project
-Route::post('/project',[ProjectController::class, 'addProject']);
+Route::post('/addProject',[ProjectController::class, 'addProject']);
 Route::post('/language',[ProgLanguageController::class, 'fetchLanguage']);
+
+//Fetch project
+Route::get('/projects',[ProjectController::class, 'fetchProject']);

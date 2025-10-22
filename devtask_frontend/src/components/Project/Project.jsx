@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import ProjectCard from './ProjectCard'
 import './project.css'
 import ProjectAdd from './ProjectAdd'
+import axios from 'axios'
+import { useLoaderData } from 'react-router-dom'
 
 function Project() {
+  const data = useLoaderData();
+  const [projects, setProjects] = useState(data);
+
+  console.log(projects);
+  
+ 
+
   return (  
     
     
@@ -20,13 +29,23 @@ function Project() {
                 </div>
 
                 <div className="project_card_container mt-5 w-100 d-flex flex-wrap justify-content-start align-items-center justify-items-start gap-4">
+                {projects.length > 0 ?( projects.map((project)=>(
+
+                  <ProjectCard key={project.id} project={project} />
+                ))): (
+                  <p>No found</p>
+                )}
+                  {/* <ProjectCard />
                   <ProjectCard />
-                  <ProjectCard />
-                  <ProjectCard />
-                  <ProjectCard />
+                  <ProjectCard /> */}
                 </div>
             </div>
   )
+}
+
+export const projectLoader = async ()=>{
+   const res = await axios.get('http://localhost:8000/api/projects');
+   return res.data.projects;
 }
 
 export default Project

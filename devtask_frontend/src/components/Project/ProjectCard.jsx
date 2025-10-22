@@ -1,23 +1,27 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
-function ProjectCard() {
+function ProjectCard({ project }) {
   return (
     <div className='p-4 project_card'>
 
         <div className="project_title">
-            <h3>Project Title</h3>
+            <h3>{project.project_title}</h3>
 
         </div>
 
         <div className="project_info">
-            <p className="m-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, provident?</p>
+            <p className="m-0">{project.project_info}</p>
         </div>
 
-        <div className="languages d-flex gap-3 mt-3">
-            <div className="language">React</div>
-            <div className="language">React</div>
-            <div className="language">React</div>
+        <div className="languages d-flex gap-3 mt-3 flex-wrap">
+            {project.languages && project.languages.length > 0 ? (
+                project.languages.map((lang)=> (
+
+                    <div key={lang} className="language">{lang}</div>
+                ))
+            ) : 'no'}
+          
         </div>   
 
             <NavLink to="/projects/:id">
