@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Programming_langugage;
 use App\Models\Project;
+use App\Models\ProjectTask;
 use App\Models\ProjectWithLanguage;
 use Illuminate\Http\Request;
 
@@ -66,5 +67,47 @@ class ProjectController extends Controller
             'projects' => $grouped
         ]);
 
+    }
+
+    //fetch project by id
+    public function fetchProjectById($id){
+
+       if(!is_numeric($id)){
+        return response()->json(['message' => 'Invalid id']);
+       }
+
+       $project = Project::find($id);
+
+       if(!$project){
+        return response()->json(['message' => 'Project is not available']);
+       }
+
+       return response()->json([
+        'project' => $project
+       ]);
+    }
+
+    //Add Task
+    public function addTask(Request $request){
+
+        if(!$request->project_id){
+            return response()->json(['Project Id is invalid']);
+        }
+
+        //Validate
+        $validate = $request->validate([
+            'project_id' => 'numeric|required',
+            'task_name' => 'string|required'
+        ]);
+
+        ProjectTask::create([
+            'project_id' => $validate['project_id'],
+            'task_name' => $validate['task_name']
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Task Added Successfully'
+        ]);
     }
 }

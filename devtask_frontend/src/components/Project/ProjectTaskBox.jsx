@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function ProjectTaskBox() {
+
   return (
     <div className="box p-2 border d-flex justify-content-between mb-3 align-items-center rounded">
                         <div className="d-flex justify-content-center align-items-center gap-2">
@@ -14,3 +15,4 @@ function ProjectTaskBox() {
 }
 
 export default ProjectTaskBox
+

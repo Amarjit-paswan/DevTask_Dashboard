@@ -24,7 +24,7 @@ function ProjectCard({ project }) {
           
         </div>   
 
-            <NavLink to="/projects/:id">
+            <NavLink to= {`/projects/${project.id}`}>
                 <div className="d-grid mt-3">
                     <button className='view_btn'>View all details</button>
                 </div>  

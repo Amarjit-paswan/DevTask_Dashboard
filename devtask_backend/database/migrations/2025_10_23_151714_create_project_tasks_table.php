@@ -10,17 +10,13 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {   
-        if(!Schema::hasTable('project_with_languages')){
-
-        Schema::create('project_with_languages', function (Blueprint $table) {
+    {
+        Schema::create('project_tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
-            $table->foreignId('language_id')->constrained('programing_langugages')->onDelete('cascade');
+            $table->string('task_name')->nullable();
             $table->timestamps();
         });
-        }
-
     }
 
     /**
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_with_languages');
+        Schema::dropIfExists('project_tasks');
     }
 };

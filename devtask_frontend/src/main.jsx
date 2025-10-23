@@ -17,7 +17,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Project, { projectLoader } from './components/Project/Project.jsx'
 import Tracker from './components/Tracker/Tracker.jsx';
 import Contact from './components/Contact/Contact.jsx';
-import ProjectDetail from './components/Project/ProjectDetail.jsx';
+import ProjectDetail, { projectDetailLoader } from './components/Project/ProjectDetail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {path: '/', element:<ProfileInfo />, loader: profileLoader},
       {path: '/projects', element:<Project />, loader: projectLoader},
-      {path: '/projects/:id', element:<ProjectDetail />},
+      {path: '/projects/:id', element:<ProjectDetail />, loader: projectDetailLoader},
       {path: '/tracker', element:<Tracker />},
       {path: '/contact', element: <Contact />, loader: profileLoader}
     ]

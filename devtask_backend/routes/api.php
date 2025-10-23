@@ -19,3 +19,7 @@ Route::post('/language',[ProgLanguageController::class, 'fetchLanguage']);
 
 //Fetch project
 Route::get('/projects',[ProjectController::class, 'fetchProject']);
+Route::get('/projects/{id}',[ProjectController::class, 'fetchProjectById']);
+
+//Add Task
+Route::post('/addTask', [ProjectController::class, 'addTask']);

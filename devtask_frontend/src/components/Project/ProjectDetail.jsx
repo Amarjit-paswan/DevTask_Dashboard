@@ -1,13 +1,20 @@
 import React from 'react'
+import { useLoaderData, useParams } from 'react-router-dom'
+import axios from 'axios';
 import ProjectTaskBox from './ProjectTaskBox'
+import ProjectTaskModal from './ProjectTaskModal';
 
 function ProjectDetail() {
+  const data = useLoaderData();
+  
   return (
     <div className='w-100 p-4'>
         <div className="title">
-            <h1 className="text-warning">Project Task</h1>
-            <p className="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id, non?</p>
+            <h1 className="text-warning">{data.project_title}</h1>
+            <p className="description">{data.project_info}</p>
         </div>
+
+        <ProjectTaskModal />
 
         <div className="progress_bar_container d-flex gap-4 justify-content-between">
             <div className="progress_bar_box w-75 text-end fw-bold fs-4"  style={{height:"15px"}}>
@@ -26,7 +33,7 @@ function ProjectDetail() {
 
             <div className="d-grid w-25">
 
-            <button className="btn btn-warning fw-bold">Add Task</button>
+            <button className="btn btn-warning fw-bold" data-bs-toggle='modal' data-bs-target='#TaskAddModal'>Add Task</button>
             </div>
             
         </div>
@@ -57,3 +64,10 @@ function ProjectDetail() {
 }
 
 export default ProjectDetail
+
+export const projectDetailLoader = async ({params})=>{
+      
+      const projectId = params.id;
+      const res = await axios.get(`http://localhost:8000/api/projects/${projectId}`);
+      return res.data.project;
+}
