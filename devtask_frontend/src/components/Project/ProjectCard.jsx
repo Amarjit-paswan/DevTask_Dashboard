@@ -5,7 +5,7 @@ function ProjectCard({ project }) {
   return (
     <div className='p-4 project_card'>
 
-        <div className="project_title">
+        <div className="project_title text-warning">
             <h3>{project.project_title}</h3>
 
         </div>

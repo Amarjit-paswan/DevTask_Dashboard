@@ -49,6 +49,7 @@ class ProjectController extends Controller
                     join('programing_langugages', 'programing_langugages.id', '=', 'project_with_languages.language_id')->
                     select('projects.id','projects.project_title','projects.project_info','programing_langugages.language')
                     ->get();
+        
 
             //Grouping to show projects
             $grouped = $projects->groupBy('id')->map(function($items){
@@ -69,37 +70,61 @@ class ProjectController extends Controller
 
     }
 
-    //fetch project by id
+    // Fetch project by id
     public function fetchProjectById($id){
 
+       // Prevents malformed input & injection attempts 
        if(!is_numeric($id)){
-        return response()->json(['message' => 'Invalid id']);
+        return response()->json(['message' => 'Invalid project id'],400);
        }
 
-       $project = Project::find($id);
+       // Fetch project only if it's belongs to logged-in user
+       $project = Project::where('id',$id)
+                        ->first();
 
+       // If project not found or unauthorized
        if(!$project){
-        return response()->json(['message' => 'Project is not available']);
+        return response()->json(['message' => 'Project is not available'],404);
        }
 
+       // Fetch project task if it's belongs to selected project
+       $projectTask = Project::where('projects.id', $id)
+                    ->join('project_tasks','project_tasks.project_id','=','projects.id')
+                    ->select('project_tasks.id','project_tasks.task_name','project_tasks.task_status')
+                    ->get();
+
+       // Return safe data
        return response()->json([
-        'project' => $project
-       ]);
+        'project' => $project,
+        'projectTasks' => $projectTask
+       ],200);
     }
 
-    //Add Task
+    // Add Task of selected project
     public function addTask(Request $request){
 
-        if(!$request->project_id){
-            return response()->json(['Project Id is invalid']);
-        }
-
-        //Validate
+        //Validate input (prevents invalid or malicious data)
         $validate = $request->validate([
             'project_id' => 'numeric|required',
             'task_name' => 'string|required'
         ]);
 
+        // Ensure the login user owns this data
+        // Prevent's attackers from adding task to other people's project
+        if(!Project::where('id',$validate['project_id'])
+                    ->exists()){
+                        return response()->json([
+                            'status' => 'error',
+                            'message'=> 'Unauthorized project access'
+                        ],403);
+        }
+            
+
+         if(!$request->project_id){
+            return response()->json(['Project Id is invalid']);
+        }
+
+        // Using fillable protects against Mass Asignment attacks
         ProjectTask::create([
             'project_id' => $validate['project_id'],
             'task_name' => $validate['task_name']
@@ -108,6 +133,11 @@ class ProjectController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Task Added Successfully'
-        ]);
+        ],201);
+    }
+
+    // Show Task of selected project
+    public function showTask(Request $request){
+
     }
 }

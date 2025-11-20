@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
-function ProjectTaskModal() {
+function ProjectTaskModal({refereshTasks}) {
   const {id} = useParams();
   const [task, setTask] = useState('');
   const [successMsg, setsuccessMsg] = useState('');
@@ -22,6 +22,8 @@ function ProjectTaskModal() {
       if(res.data.status === 'success'){
         setsuccessMsg(res.data.message);
         setTask('');
+
+        refereshTasks();
       }
       
     }

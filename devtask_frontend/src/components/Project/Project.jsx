@@ -35,9 +35,7 @@ function Project() {
                 ))): (
                   <p>No found</p>
                 )}
-                  {/* <ProjectCard />
-                  <ProjectCard />
-                  <ProjectCard /> */}
+               
                 </div>
             </div>
   )
