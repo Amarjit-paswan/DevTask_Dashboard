@@ -6,6 +6,7 @@ use App\Models\Programming_langugage;
 use App\Models\Project;
 use App\Models\ProjectTask;
 use App\Models\ProjectWithLanguage;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -93,10 +94,17 @@ class ProjectController extends Controller
                     ->select('project_tasks.id','project_tasks.task_name','project_tasks.task_status')
                     ->get();
 
+        //Find total number of each status
+        $taskCategory = $projectTask->groupBy('task_status');
+
        // Return safe data
        return response()->json([
         'project' => $project,
-        'projectTasks' => $projectTask
+        'projectTasks' => $projectTask,
+        'taskCategory' => [
+            'Completed' => $taskCategory->has('Completed') ? $taskCategory['Completed']->count() : 0,
+            'Pending' => $taskCategory->has('Pending') ? $taskCategory['Pending']->count() : 0
+        ]
        ],200);
     }
 
@@ -136,8 +144,39 @@ class ProjectController extends Controller
         ],201);
     }
 
-    // Show Task of selected project
-    public function showTask(Request $request){
+    //Change Status of task
+    public function changeTaskStatus(Request $request){
+        
+        //Prevent invalid and malicious data
+        $validate = $request->validate(
+            [
+                'taskStatus' => 'boolean|required',
+                'taskId' => 'numeric|required'
+            ]
+        );
 
+        //Ensure task id owns in project Task table
+        if(!ProjectTask::where('id',$validate['taskId'])->exists()){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Task Id is invalid'
+            ],404);
+        }
+
+        //Convert boolean to text -> prevents invalid DB values
+        $statusText = $validate['taskStatus'] ? 'Completed' : 'Pending';
+
+        //Update task Status
+        ProjectTask::where('id',$validate['taskId'])->update([
+            'task_status' => $statusText
+        ]);
+
+        //Return response
+        return response()->json([
+            'status' => true,
+            'message' => 'Task Updated Successfully',
+            'taskStatus' => $statusText
+        ],200);
+       
     }
 }

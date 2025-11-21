@@ -8,18 +8,34 @@ function ProjectDetail() {
   const data = useLoaderData();
 
   const [projectTasks, setprojectTasks] = useState(data.projectTasks);
+  const [CompeletedTask, setCompletedTask] = useState(0);
+  const [PendingTask, setPendingTask] = useState(0);
   const projectId = data.project.id;
   const fetchTasks = async ()=>{
         const res = await axios.get(`http://localhost:8000/api/projects/${projectId}`);
         setprojectTasks(res.data.projectTasks);
+        setCompletedTask(res.data.taskCategory.Completed);
+        setPendingTask(res.data.taskCategory.Pending);
+        
     }
   useEffect(()=>{
   
     fetchTasks();
   },[]);
-//   const projectTasks = data.projectTasks;
-  console.log(projectTasks);
+
+  //Percentage of Completed Task
+  const total = CompeletedTask + PendingTask;
+  const progressPercentage = total === 0 ? 0 : (CompeletedTask / total) * 100;
+  console.log(progressPercentage);
+
+  //Show Task related to filter
+  const [filter, setFilter] = useState('All');
+  const filteredTask = projectTasks.filter((task)=>{
+    if(filter === 'All') return true;
+    return task.task_status === filter;
+  })
   
+
   return (
     <div className='w-100 p-4'>
         <div className="title">
@@ -34,14 +50,14 @@ function ProjectDetail() {
                 <div className="progress mb-2" style={{height:"100%"}}>
                     <div className="progress-bar bg-primary progress-bar-striped progress-bar-animated"
                     role='progressbar'
-                    style={{width:"60%"}}
-                    aria-valuenow="60"
-                    aria-valuemin="0"
+                    style={{width: `${progressPercentage}%`}}
+                    aria-valuenow="100"
+                    aria-valuemin="100"
                     aria-valuemax="100"
                     >
                     </div>
                 </div>
-                    60%
+                    {progressPercentage}%
             </div>
 
             <div className="d-grid w-25">
@@ -53,29 +69,28 @@ function ProjectDetail() {
 
         <div className="task_container mt-5">
             <div className="title pb-2 d-flex gap-5 ">
-                <h2 className='border-bottom border-warning border-3'>All</h2>
-                <h2>Completed</h2>
-                <h2>Pending</h2>
+                <h2 className={`cursor-pointer ${filter === 'All' ?  'border-bottom border-warning border-3' : '' }`} onClick={()=>setFilter('All')}>All</h2>
+                <h2 className={`cursor-pointer ${filter === 'Completed' ?  'border-bottom border-warning border-3' : '' }`} onClick={()=>setFilter('Completed')}>Completed</h2>
+                <h2 className={` cursor-pointer ${filter === 'Pending' ?  'border-bottom border-warning border-3' : '' }`} onClick={()=>setFilter('Pending')}>Pending</h2>
+                
             </div>
 
             <div className="task_details_container d-flex justify-content-center align-items-start py-3 gap-3">
                 <div className="task_box  w-75">
-                    { projectTasks.length > 0 ? ( projectTasks.map((task)=>
+                    { filteredTask.length > 0 ? ( filteredTask.map((task)=>
 
-                        <ProjectTaskBox key={task.id} task={task} />
+                        <ProjectTaskBox key={task.id} task={task} onStatusChange={fetchTasks} />
                     ) ): (
                     
-                    <p className='p-5 text-danger fw-bold fs-1 text-center'>No Task added yet</p>
+                    <p className='p-5 text-danger fw-bold fs-1 text-center'>No {filter} Task added yet</p>
                     
                     )}
-                    {/* <ProjectTaskBox />
-                    <ProjectTaskBox /> */}
+          
                 </div>
 
                 <div className="overview p-3 w-25 border rounded " style={{minHeight:"200px"}}>
-                    <p className="my-2 fs-4">1 Task Completed</p>
-                    <p className="my-2 fs-4">1 Task Completed</p>
-                    <p className="my-2 fs-4">1 Task Completed</p>
+                    <p className="my-2 fs-4">{CompeletedTask} Task Completed</p>
+                    <p className="my-2 fs-4">{PendingTask} Task Pending</p>
                 </div>
             </div>
         </div>

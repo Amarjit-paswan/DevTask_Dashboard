@@ -23,3 +23,4 @@ Route::get('/projects/{id}',[ProjectController::class, 'fetchProjectById']);
 
 //Add Task
 Route::post('/addTask', [ProjectController::class, 'addTask']);
+Route::post('/updateTaskStatus', [ProjectController::class, 'changeTaskStatus']);
