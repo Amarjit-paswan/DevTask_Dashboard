@@ -16,7 +16,6 @@ function ProjectTaskModal({refereshTasks}) {
         'task_name' : task
       };
       const res = await axios.post('http://localhost:8000/api/addTask',data);
-      console.log(res);
 
       //Show success message
       if(res.data.status === 'success'){

@@ -6,8 +6,11 @@ use App\Models\Programming_langugage;
 use App\Models\Project;
 use App\Models\ProjectTask;
 use App\Models\ProjectWithLanguage;
+use DateTime;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+
+use function Symfony\Component\Clock\now;
 
 class ProjectController extends Controller
 {
@@ -91,7 +94,7 @@ class ProjectController extends Controller
        // Fetch project task if it's belongs to selected project
        $projectTask = Project::where('projects.id', $id)
                     ->join('project_tasks','project_tasks.project_id','=','projects.id')
-                    ->select('project_tasks.id','project_tasks.task_name','project_tasks.task_status')
+                    ->select('project_tasks.id','project_tasks.project_id','project_tasks.task_name','project_tasks.task_status')
                     ->get();
 
         //Find total number of each status
@@ -178,5 +181,60 @@ class ProjectController extends Controller
             'taskStatus' => $statusText
         ],200);
        
+    }
+
+    //Update project time when compeleted
+    public function updateProjectTime(Request $request){
+        
+        //validate project_id
+        $validate = $request->validate([
+            'project_id' => 'numeric|required',
+            'pendingTask' => 'numeric|required'
+        ]);
+
+        //Validate id -> prevents invalid id
+        if(!is_numeric($validate['project_id'])){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid project id'
+            ],400);
+        }
+
+       
+
+        //Check if project exists -> prevents updating a non-existing row
+        $project = Project::find($validate['project_id']);
+        if(!$project){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Project id is invalid'
+            ],404);
+        }
+
+       //Update completion time if pending is 0
+       if($validate['pendingTask'] === 0){
+            $updated = $project->update([
+                'completed_project_at' => now()
+            ]);
+       }else{
+             $updated = $project->update([
+                'completed_project_at' => NULL
+            ]);
+       }
+     
+
+
+       if($updated){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Project Updated Successfully'
+            ],200);
+       }
+
+       //Show error if project doesn't update
+       return response()->json([
+            'status' => 'error',
+            'message' => 'Updated failed'
+       ],500);
     }
 }

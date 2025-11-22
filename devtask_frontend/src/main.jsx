@@ -15,7 +15,7 @@ import ProfileInfo, { profileLoader } from './components/Home/ProfileInfo.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Project, { projectLoader } from './components/Project/Project.jsx'
-import Tracker from './components/Tracker/Tracker.jsx';
+import Tracker, { projectStatusLoader } from './components/Tracker/Tracker.jsx';
 import Contact from './components/Contact/Contact.jsx';
 import ProjectDetail, { projectDetailLoader } from './components/Project/ProjectDetail.jsx';
 
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {path: '/', element:<ProfileInfo />, loader: profileLoader},
       {path: '/projects', element:<Project />, loader: projectLoader},
       {path: '/projects/:id', element:<ProjectDetail />, loader: projectDetailLoader},
-      {path: '/tracker', element:<Tracker />},
+      {path: '/tracker', element:<Tracker />, loader: projectStatusLoader},
       {path: '/contact', element: <Contact />, loader: profileLoader}
     ]
   }

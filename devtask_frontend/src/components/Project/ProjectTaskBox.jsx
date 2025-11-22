@@ -5,7 +5,6 @@ function ProjectTaskBox({task, onStatusChange}) {
   const [taskStatus, settaskStatus] = useState(task.task_status);
   const taskId = task.id;
   const [Checked, setChecked] = useState(task.task_status === 'Completed');
-  console.log(Checked);
   
   const changeStatus = async  ()=>{
     const newStatus = !Checked;
@@ -17,8 +16,28 @@ function ProjectTaskBox({task, onStatusChange}) {
     };
    
     
-    const res = await axios.post('http://localhost:8000/api/updateTaskStatus', data);
-    settaskStatus(res.data.taskStatus);
+    const res1 = await axios.post('http://localhost:8000/api/updateTaskStatus', data);
+    settaskStatus(res1.data.taskStatus);
+
+    //Update project completed time
+    const res = await axios.get(`http://localhost:8000/api/projects/${task.project_id}`);
+    const completed = res.data.taskCategory.Completed;
+    const pending = res.data.taskCategory.Pending;
+    const totalTask = completed + pending;
+
+    const Updatedata = {
+      'project_id' : task.project_id,
+      'pendingTask' : pending
+    };
+    const updateProject_time = async ()=>{
+            if(totalTask > 0){
+                await axios.post(`http://localhost:8000/api/updateProject_time`, Updatedata);
+                    
+            }
+    }
+
+    updateProject_time();
+            
     
     onStatusChange();
   }
@@ -40,6 +59,5 @@ function ProjectTaskBox({task, onStatusChange}) {
                     </div>
   )
 }
-
 export default ProjectTaskBox
 

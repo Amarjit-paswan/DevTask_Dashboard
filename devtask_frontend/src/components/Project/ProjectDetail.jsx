@@ -16,6 +16,9 @@ function ProjectDetail() {
         setprojectTasks(res.data.projectTasks);
         setCompletedTask(res.data.taskCategory.Completed);
         setPendingTask(res.data.taskCategory.Pending);
+
+ 
+
         
     }
   useEffect(()=>{
@@ -26,7 +29,6 @@ function ProjectDetail() {
   //Percentage of Completed Task
   const total = CompeletedTask + PendingTask;
   const progressPercentage = total === 0 ? 0 : (CompeletedTask / total) * 100;
-  console.log(progressPercentage);
 
   //Show Task related to filter
   const [filter, setFilter] = useState('All');
@@ -79,7 +81,7 @@ function ProjectDetail() {
                 <div className="task_box  w-75">
                     { filteredTask.length > 0 ? ( filteredTask.map((task)=>
 
-                        <ProjectTaskBox key={task.id} task={task} onStatusChange={fetchTasks} />
+                        <ProjectTaskBox key={task.id} task={task}   onStatusChange={fetchTasks} />
                     ) ): (
                     
                     <p className='p-5 text-danger fw-bold fs-1 text-center'>No {filter} Task added yet</p>

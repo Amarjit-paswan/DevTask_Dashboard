@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgLanguageController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TrackerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,6 @@ Route::get('/projects/{id}',[ProjectController::class, 'fetchProjectById']);
 //Add Task
 Route::post('/addTask', [ProjectController::class, 'addTask']);
 Route::post('/updateTaskStatus', [ProjectController::class, 'changeTaskStatus']);
+Route::post('/updateProject_time', [ProjectController::class, 'updateProjectTime']);
+
+Route::get('/projectStatus_tracker', [TrackerController::class, 'fetchProject_list']);
