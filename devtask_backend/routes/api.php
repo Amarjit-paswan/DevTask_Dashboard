@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgLanguageController;
 use App\Http\Controllers\ProjectController;
@@ -28,3 +29,6 @@ Route::post('/updateTaskStatus', [ProjectController::class, 'changeTaskStatus'])
 Route::post('/updateProject_time', [ProjectController::class, 'updateProjectTime']);
 
 Route::get('/projectStatus_tracker', [TrackerController::class, 'fetchProject_list']);
+
+//Send Message to admin
+Route::post('/sendMessage', [ContactController::class, 'sendMessage']);

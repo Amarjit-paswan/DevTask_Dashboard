@@ -10,20 +10,22 @@ function ProfileInfo() {
     
     const data = useLoaderData();
     const [profileImg, setProfileImg] = useState('');
-
+    const [followers, setFollowers] = useState(0);
+    const [following, setFollowing] = useState(0);
 
     useEffect(()=>{
        async function fetchGithubDetals(){
            const res = await axios.get(data.github_url);
            setProfileImg(res.data.avatar_url);
-
+           setFollowers(res.data.followers);
+           setFollowing(res.data.following); 
         }
 
         if(data.github_url){
 
             fetchGithubDetals();
         }
-    },[data.github_url])
+    },[data])
 
     
  
@@ -53,9 +55,9 @@ function ProfileInfo() {
             </div>
             <div className='card_container mt-5 d-flex justify-content-around  py-4 px-5'>
 
-                <Card />
-                <Card />
-                <Card />
+                <Card bio={followers} bioText="Followers"/>
+                <Card bio={following} bioText="Following"/>
+                
             </div>
         </div>
     
