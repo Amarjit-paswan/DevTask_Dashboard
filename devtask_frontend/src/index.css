@@ -71,3 +71,23 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Theme change css  */
+.light-mode{
+  background-color: #ffffff;
+  color: #0000;
+}
+
+.light-mode p{
+  color: #0000;
+}
+.light-mode a{
+  color: #0000 !important;
+}
+
+
+
+.dark-mode{
+  background-color: #01032a;
+  color: #ffffff;
+}

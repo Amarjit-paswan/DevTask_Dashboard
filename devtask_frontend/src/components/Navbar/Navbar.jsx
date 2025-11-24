@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import Theme from '../Theme/theme'
 
 function Navbar() {
   return (
@@ -33,6 +34,10 @@ function Navbar() {
                             Contact
                         </NavLink>
                     </li>
+
+                    <div className="theme_container">
+                        <Theme></Theme>
+                    </div>
                     
                 </ul>
             </div>

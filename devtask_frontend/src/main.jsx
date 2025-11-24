@@ -18,6 +18,7 @@ import Project, { projectLoader } from './components/Project/Project.jsx'
 import Tracker, { projectStatusLoader } from './components/Tracker/Tracker.jsx';
 import Contact from './components/Contact/Contact.jsx';
 import ProjectDetail, { projectDetailLoader } from './components/Project/ProjectDetail.jsx';
+import { ThemeProvider } from './components/Theme/ThemeContext.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <ThemeProvider>
+
+      <RouterProvider router={router}></RouterProvider>
+    </ThemeProvider>
   </StrictMode>,
 )
