@@ -12,6 +12,11 @@ function Project() {
 
   console.log(projects);
   
+  //Refresh project list after adding a new project
+  const relaodProjects = async ()=>{
+    const res = await axios.get('http://localhost:8000/api/projects');
+    setProjects(res.data.projects);
+  }
  
 
   return (  
@@ -19,7 +24,7 @@ function Project() {
     
     <div className="projectList_container w-100  p-4">
                 {/* Model for project add  */}
-                <ProjectAdd />
+                <ProjectAdd refreshProject = {relaodProjects} />
 
                 {/* title  */}
                 <div className="tittle d-flex justify-content-between align-items-center">
